@@ -3,6 +3,7 @@
 
 import * as jspb from "google-protobuf";
 import * as entity_pb from "./entity_pb";
+import * as app_pb from "./app_pb";
 import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 
 export class MID extends jspb.Message {
@@ -123,6 +124,16 @@ export class CelerMsg extends jspb.Message {
   getPayResultVouchResponse(): entity_pb.VouchedCondPayResult | undefined;
   setPayResultVouchResponse(value?: entity_pb.VouchedCondPayResult): void;
 
+  hasStateProof(): boolean;
+  clearStateProof(): void;
+  getStateProof(): StateProof | undefined;
+  setStateProof(value?: StateProof): void;
+
+  hasStateProofResponse(): boolean;
+  clearStateProofResponse(): void;
+  getStateProofResponse(): StateProofResponse | undefined;
+  setStateProofResponse(value?: StateProofResponse): void;
+
   getMessageCase(): CelerMsg.MessageCase;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CelerMsg.AsObject;
@@ -155,6 +166,8 @@ export namespace CelerMsg {
     revealSecretAck?: RevealSecretAck.AsObject,
     payResultVouchRequest?: entity_pb.VouchedCondPayResult.AsObject,
     payResultVouchResponse?: entity_pb.VouchedCondPayResult.AsObject,
+    stateProof?: StateProof.AsObject,
+    stateProofResponse?: StateProofResponse.AsObject,
   }
 
   export enum MessageCase {
@@ -174,6 +187,8 @@ export namespace CelerMsg {
     REVEAL_SECRET_ACK = 33,
     PAY_RESULT_VOUCH_REQUEST = 34,
     PAY_RESULT_VOUCH_RESPONSE = 35,
+    STATE_PROOF = 36,
+    STATE_PROOF_RESPONSE = 37,
   }
 }
 
@@ -1128,6 +1143,68 @@ export class QueryDelegationResponse extends jspb.Message {
 export namespace QueryDelegationResponse {
   export type AsObject = {
     proof?: DelegationProof.AsObject,
+  }
+}
+
+export class StateProof extends jspb.Message {
+  hasAppState(): boolean;
+  clearAppState(): void;
+  getAppState(): app_pb.AppState | undefined;
+  setAppState(value?: app_pb.AppState): void;
+
+  getRequesterSig(): Uint8Array | string;
+  getRequesterSig_asU8(): Uint8Array;
+  getRequesterSig_asB64(): string;
+  setRequesterSig(value: Uint8Array | string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StateProof.AsObject;
+  static toObject(includeInstance: boolean, msg: StateProof);
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: StateProof, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StateProof;
+  static deserializeBinaryFromReader(message: StateProof, reader: jspb.BinaryReader): StateProof;
+}
+
+export namespace StateProof {
+  export type AsObject = {
+      appState?: app_pb.AppState.AsObject,
+      requesterSig: Uint8Array | string,
+  }
+}
+
+export class StateProofResponse extends jspb.Message {
+  hasAppState(): boolean;
+  clearAppState(): void;
+  getAppState(): app_pb.AppState | undefined;
+  setAppState(value?: app_pb.AppState): void;
+
+  getRequesterSig(): Uint8Array | string;
+  getRequesterSig_asU8(): Uint8Array;
+  getRequesterSig_asB64(): string;
+  setRequesterSig(value: Uint8Array | string): void;
+
+  getApproverSig(): Uint8Array | string;
+  getApproverSig_asU8(): Uint8Array;
+  getApproverSig_asB64(): string;
+  setApproverSig(value: Uint8Array | string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): StateProofResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: StateProofResponse): StateProofResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: StateProofResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): StateProofResponse;
+  static deserializeBinaryFromReader(message: StateProofResponse, reader: jspb.BinaryReader): StateProofResponse;
+}
+
+export namespace StateProofResponse {
+  export type AsObject = {
+      appState?: app_pb.AppState.AsObject,
+      requesterSig: Uint8Array | string,
+      approverSig: Uint8Array | string,
   }
 }
 
