@@ -34,4 +34,10 @@ export interface ContractsInfo {
   readonly payResolverAddress: string;
   /** The VirtContractResolver contract address */
   readonly virtContractResolverAddress: string;
+  /** The AccessSecretRegistry contract address */
+  readonly accessSecretRegistryAddress: string;
+  /** The SingleSessionApp contract address */
+  readonly singleSessionAppAddress: string;
 }
+
+

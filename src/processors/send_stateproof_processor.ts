@@ -46,7 +46,6 @@ const SEND_STATEPROOF_TIMEOUT = 10;
 const WAIT_RESPONSE_INTERVAL = 10;
 
 export class SendStateProofProcessor {
-    private readonly db: Database;
     private readonly messageManager: MessageManager;
     private readonly cryptoManager: CryptoManager;
     private readonly contractsInfo: ContractsInfo;
@@ -55,13 +54,11 @@ export class SendStateProofProcessor {
     private currentResponse: StateProofResponse;
 
     constructor(
-        db: Database,
         messageManager: MessageManager,
         cryptoManager: CryptoManager,
         contractsInfo: ContractsInfo,
         config: Config
     ) {
-        this.db = db;
         this.messageManager = messageManager;
         this.cryptoManager = cryptoManager;
         this.contractsInfo = contractsInfo;
