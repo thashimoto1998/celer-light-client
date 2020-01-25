@@ -11,73 +11,157 @@ import {
 } from ".";
 
 interface AccessSecretRegistryInterface extends Interface {
-    functions :{
-        getOutcome: TypedFunctionDescription<{ 
-            encode([_query] : [Arrayish]): string;
-        }>;
+  functions: {
+    getSeqNum: TypedFunctionDescription<{ encode([]: []): string }>;
 
-        getDID: TypedFunctionDescription<{
-            encode([_key]: [BigNumberish]): string;
-        }>;
+    getStatus: TypedFunctionDescription<{ encode([]: []): string }>;
 
-        getKeyDID: TypedFunctionDescription<{
-            encode([_key]: [Arrayish]): string;
-        }>;
+    intendSettle: TypedFunctionDescription<{
+      encode([_stateProof]: [Arrayish]): string;
+    }>;
 
-        checkPermissions: TypedFunctionDescription<{
-            encode([user, documentKeyId]: [string, Arrayish]): string;
-        }>;
+    isFinalized: TypedFunctionDescription<{
+      encode([_query]: [Arrayish]): string;
+    }>;
 
-        getOwner: TypedFunctionDescription<{
-            encode([]:[]): string;
-        }>;
+    getOutcome: TypedFunctionDescription<{
+      encode([_query]: [Arrayish]): string;
+    }>;
 
-        getGrantee: TypedFunctionDescription<{
-            encode([]: []): string;
-        }>;
-    }
+    setDID: TypedFunctionDescription<{
+      encode([_did, _didRegistryAddress]: [Arrayish, string]): string;
+    }>;
 
-    events: {
-        settedDID: TypedEventDescription<{
-            encodeTopics([did]: [Arrayish])
-        }>;
-    }
+    getDID: TypedFunctionDescription<{
+      encode([_key]: [BigNumberish]): string;
+    }>;
+
+    getKeyDID: TypedFunctionDescription<{ encode([_did]: [Arrayish]): string }>;
+
+    checkPermissions: TypedFunctionDescription<{
+      encode([_grantee, _documentId]: [string, Arrayish]): string;
+    }>;
+
+    getOwner: TypedFunctionDescription<{ encode([]: []): string }>;
+
+    getGrantee: TypedFunctionDescription<{ encode([]: []): string }>;
+  };
+
+  events: {
+    IntendSettle: TypedEventDescription<{
+      encodeTopics([seq]: [null]): string[];
+    }>;
+
+    settedDID: TypedEventDescription<{ encodeTopics([did]: [null]): string[] }>;
+  };
 }
 
 export class AccessSecretRegistry extends Contract {
-    connect(signerOrProvider: Signer | Provider | string): AccessSecretRegistry;
-    attach(addressOrName: string): AccessSecretRegistry;
-    deployed(): Promise<AccessSecretRegistry>;
-    
-    on(event: EventFilter | string, listener: Listener): AccessSecretRegistry;
-    once(event: EventFilter | string, listener: Listener): AccessSecretRegistry;
-    addListener(eventName: EventFilter | string, listener: Listener): AccessSecretRegistry;
-    removeAllListeners(eventName: EventFilter | string): AccessSecretRegistry;
-    removeListener(eventName: any, listener: Listener): AccessSecretRegistry;
+  connect(signerOrProvider: Signer | Provider | string): AccessSecretRegistry;
+  attach(addressOrName: string): AccessSecretRegistry;
+  deployed(): Promise<AccessSecretRegistry>;
 
-    functions: {
-        getOutcome(_query: Arrayish): Promise<boolean>;
-        setDID(_did: Arrayish, _didRegistryAddress: string): Promise<boolean>;
-        getDID(_key: BigNumber): Promise<Arrayish>;
-        getKeyDID(_did: Arrayish): Promise<BigNumber>;
-        checkPermissions(_grantee: string, _documentId: Arrayish): Promise<boolean>;
-        getOwner(): Promise<string>;
-        getGrantee(): Promise<string>;
-    };
+  on(event: EventFilter | string, listener: Listener): AccessSecretRegistry;
+  once(event: EventFilter | string, listener: Listener): AccessSecretRegistry;
+  addListener(
+    eventName: EventFilter | string,
+    listener: Listener
+  ): AccessSecretRegistry;
+  removeAllListeners(eventName: EventFilter | string): AccessSecretRegistry;
+  removeListener(eventName: any, listener: Listener): AccessSecretRegistry;
 
-    events: {
-        settedDID: TypedEventDescription<{
-            encodeTopics([did]: [Arrayish]): string[];
-        }>;
-    };
+  interface: AccessSecretRegistryInterface;
 
-    estimate: {
-        getOutcome(_query: Arrayish): Promise<BigNumber>;
-        setDID(_did: Arrayish, _didRegistryAddress: string): Promise<BigNumber>;
-        getDID(_key:BigNumber): Promise<BigNumber>;
-        getKeyDID(_did: Arrayish): Promise<BigNumber>;
-        checkPermissions(_grantee: string, _documentId: Arrayish): Promise<boolean>;
-        getOwner(): Promise<BigNumber>;
-        getGrantee(): Promise<BigNumber>;
-    };
+  functions: {
+    getSeqNum(): Promise<BigNumber>;
+
+    getStatus(): Promise<number>;
+
+    intendSettle(
+      _stateProof: Arrayish,
+      overrides?: TransactionOverrides
+    ): Promise<ContractTransaction>;
+
+    isFinalized(_query: Arrayish): Promise<boolean>;
+
+    getOutcome(_query: Arrayish): Promise<boolean>;
+
+    setDID(
+      _did: Arrayish,
+      _didRegistryAddress: string,
+      overrides?: TransactionOverrides
+    ): Promise<ContractTransaction>;
+
+    getDID(_key: BigNumberish): Promise<string>;
+
+    getKeyDID(_did: Arrayish): Promise<number>;
+
+    checkPermissions(_grantee: string, _documentId: Arrayish): Promise<boolean>;
+
+    getOwner(): Promise<string>;
+
+    getGrantee(): Promise<string>;
+  };
+
+  getSeqNum(): Promise<BigNumber>;
+
+  getStatus(): Promise<number>;
+
+  intendSettle(
+    _stateProof: Arrayish,
+    overrides?: TransactionOverrides
+  ): Promise<ContractTransaction>;
+
+  isFinalized(_query: Arrayish): Promise<boolean>;
+
+  getOutcome(_query: Arrayish): Promise<boolean>;
+
+  setDID(
+    _did: Arrayish,
+    _didRegistryAddress: string,
+    overrides?: TransactionOverrides
+  ): Promise<ContractTransaction>;
+
+  getDID(_key: BigNumberish): Promise<string>;
+
+  getKeyDID(_did: Arrayish): Promise<number>;
+
+  checkPermissions(_grantee: string, _documentId: Arrayish): Promise<boolean>;
+
+  getOwner(): Promise<string>;
+
+  getGrantee(): Promise<string>;
+
+  filters: {
+    IntendSettle(seq: null): EventFilter;
+
+    settedDID(did: null): EventFilter;
+  };
+
+  estimate: {
+    getSeqNum(): Promise<BigNumber>;
+
+    getStatus(): Promise<BigNumber>;
+
+    intendSettle(_stateProof: Arrayish): Promise<BigNumber>;
+
+    isFinalized(_query: Arrayish): Promise<BigNumber>;
+
+    getOutcome(_query: Arrayish): Promise<BigNumber>;
+
+    setDID(_did: Arrayish, _didRegistryAddress: string): Promise<BigNumber>;
+
+    getDID(_key: BigNumberish): Promise<BigNumber>;
+
+    getKeyDID(_did: Arrayish): Promise<BigNumber>;
+
+    checkPermissions(
+      _grantee: string,
+      _documentId: Arrayish
+    ): Promise<BigNumber>;
+
+    getOwner(): Promise<BigNumber>;
+
+    getGrantee(): Promise<BigNumber>;
+  };
 }

@@ -11,54 +11,68 @@ import {
 } from ".";
 
 interface SingleSessionAppInterface extends Interface {
-    functions: {
-        intendSettle: TypedFunctionDescription<{ 
-            encode([_stateProof]: [Arrayish]): string;
-        }>;
+  functions: {
+    intendSettle: TypedFunctionDescription<{
+      encode([_stateProof]: [Arrayish]): string;
+    }>;
 
-        getStatus: TypedFunctionDescription<{
-            encode([]:[]): string;
-        }>;
+    getStatus: TypedFunctionDescription<{ encode([]: []): string }>;
 
-        getSeqNum: TypedFunctionDescription<{
-            encode([]:[]): string;
-        }>;
-    };
+    getSeqNum: TypedFunctionDescription<{ encode([]: []): string }>;
+  };
 
-    events: {
-        IntendSettle: TypedEventDescription<{
-            encodeTopics([seq]:[null]): string[];
-        }>;
-    }
+  events: {
+    IntendSettle: TypedEventDescription<{
+      encodeTopics([seq]: [null]): string[];
+    }>;
+  };
 }
 
 export class SingleSessionApp extends Contract {
-    connect(signerOrProvider: Signer | Provider | string): SingleSessionApp;
-    attach(addressOrName: string): SingleSessionApp;
-    deployed(): Promise<SingleSessionApp>;
+  connect(signerOrProvider: Signer | Provider | string): SingleSessionApp;
+  attach(addressOrName: string): SingleSessionApp;
+  deployed(): Promise<SingleSessionApp>;
 
-    on(event: EventFilter | string, listener: Listener): SingleSessionApp;
-    once(event: EventFilter | string, listener: Listener): SingleSessionApp;
-    addListener(eventName: EventFilter | string, listener: Listener): SingleSessionApp;
-    removeAllListeners(eventName: EventFilter | string): SingleSessionApp;
-    removeListener(eventName: any, listener: Listener): SingleSessionApp;
+  on(event: EventFilter | string, listener: Listener): SingleSessionApp;
+  once(event: EventFilter | string, listener: Listener): SingleSessionApp;
+  addListener(
+    eventName: EventFilter | string,
+    listener: Listener
+  ): SingleSessionApp;
+  removeAllListeners(eventName: EventFilter | string): SingleSessionApp;
+  removeListener(eventName: any, listener: Listener): SingleSessionApp;
 
-    interface: SingleSessionAppInterface;
+  interface: SingleSessionAppInterface;
 
-    functions: {
-        intendSettle(
-            _stateProof: Arrayish,
-            overrides?: TransactionOverrides
-        ): Promise<ContractTransaction>;
+  functions: {
+    intendSettle(
+      _stateProof: Arrayish,
+      overrides?: TransactionOverrides
+    ): Promise<ContractTransaction>;
 
-        getStatus(): Promise<string>;
-        getSeqNum(): Promise<BigNumber>;
-    }
+    getStatus(): Promise<number>;
 
-    estimate: {
-        intendSettle(_stateProof: Arrayish): Promise<BigNumber>;
+    getSeqNum(): Promise<BigNumber>;
+  };
 
-        getStatus(): Promise<BigNumber>;
-        getSeqNum(): Promise<BigNumber>;
-    }
+  intendSettle(
+    _stateProof: Arrayish,
+    overrides?: TransactionOverrides
+  ): Promise<ContractTransaction>;
+
+  getStatus(): Promise<number>;
+
+  getSeqNum(): Promise<BigNumber>;
+
+  filters: {
+    IntendSettle(seq: null): EventFilter;
+  };
+
+  estimate: {
+    intendSettle(_stateProof: Arrayish): Promise<BigNumber>;
+
+    getStatus(): Promise<BigNumber>;
+
+    getSeqNum(): Promise<BigNumber>;
+  };
 }
